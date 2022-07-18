@@ -10,11 +10,15 @@ public interface List<E> {
 
     public void add(int index, E elem);
 
+    public E get(int index);
+
     public int indexOf(E elem);
 
     public boolean remove(E elem);
 
-    public boolean removeIndex(int index);
+    public boolean removeAll(E elem);
+
+    public void removeIndex(int index);
 
     public int size();
 
