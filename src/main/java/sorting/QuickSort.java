@@ -63,7 +63,6 @@ public class QuickSort<E extends Comparable> implements Sort<E> {
         for (int i = left + 1; i <= right; i++) {
             int compareVal = arr[i].compareTo(arr[pivot]);
             if (compareVal < 0) {
-                E pivotElem = arr[pivot];
                 swap(arr, i, pivot); // Place smaller element at the pivot index and move the pivot index up
                 pivot++;
                 swap(arr, pivot, i); // Place larger element to the right of the pivot and pivot elem in correct spot
