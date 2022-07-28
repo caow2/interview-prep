@@ -4,25 +4,25 @@ package datastructs.List;
  * Barebones interface for the {@link java.util.List} API for simplicity on implementations.
  */
 public interface List<E> {
-    public void add(E elem);
+    void add(E elem);
     
-    public void addAll(E... elems);
+    void addAll(E... elems);
 
-    public void add(int index, E elem);
+    void add(int index, E elem);
 
-    public E get(int index);
+    E get(int index);
 
-    public int indexOf(E elem);
+    int indexOf(E elem);
 
-    public boolean remove(E elem);
+    boolean remove(E elem);
 
-    public boolean removeAll(E elem);
+    boolean removeAll(E elem);
 
-    public void removeIndex(int index);
+    void removeIndex(int index);
 
-    public int size();
+    int size();
 
-    public boolean isEmpty();
+    boolean isEmpty();
 
-    public void clear();
+    void clear();
 }
