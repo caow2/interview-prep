@@ -3,7 +3,7 @@ package datastructs.Tree;
 /**
  * Utility class to construct binary trees for testing from simplified input.
  */
-public class TreeVendor<E> {
+public class TreeVendor {
 
     /**
      * Create the binary tree from the given values. Tree construction works as follows:
@@ -44,7 +44,7 @@ public class TreeVendor<E> {
             int parentIdx = (i - 1) / 2; // Leverage ceil in integer division to round down in case this index was 2i + 2
             TreeNode parent = treeNodes[parentIdx];
             TreeNode current = new TreeNode(currVal);
-            treeNodes[i] = current;
+            treeNodes[i] = current; // Add to array for future children of this node
             if (i % 2 == 1) {
                 // Left child
                 parent.setLeft(current);
