@@ -88,4 +88,20 @@ public class SegmentTreeTest {
         // Assert
         assertThat(rangeSum, is(expectedOutput));
     }
+
+    @Test
+    public void testUpdateRange() {
+        // Arrange
+        int[] input = new int[] {5, 9, 2, 3, 4, 1};
+        tree = new SegmentTree(input);
+        int[] expectedTree = new int[] {26, 15, 11, 10, 5, 10, 1, 5, 5, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        int[] expectedVals = new int[] {5, 5, 5, 5, 5, 1};
+
+        // Act
+        tree.updateRange(1, 4, 5);
+
+        // Assert
+        assertThat(tree.getTree(), is(expectedTree));
+        assertThat(tree.getVals(), is(expectedVals));
+    }
 }

@@ -33,12 +33,18 @@ import lombok.Getter;
  *
  * For a more detailed explanation, please see
  * https://leetcode.com/articles/a-recursive-approach-to-segment-trees-range-sum-queries-lazy-propagation/
- *
- * TODO - Add lazy update to segment tree for efficient updates. Otherwise across v updates, the runtime becomes vlogn
  */
 @Getter
 public class SegmentTree {
     private int[] tree;
+
+    /**
+     * Auxiliary array that has the same structure as {@link #tree}. This stores update values and allows for lazy update
+     * propagation within the segment tree.
+     * lazy[i] corresponds to the amount that needs to be added to tree[i] when tree[i] is normalized to remove
+     * laziness.
+     */
+    private int[] lazy;
 
     /**
      * Retain the original array for a leaf-node view of the segment tree.
@@ -173,6 +179,43 @@ public class SegmentTree {
             int mid = (leftBound + rightBound) / 2, leftChild = 2 * currentIndex + 1, rightChild = leftChild + 1;
             return query(leftChild, leftBound, mid, left, right) +
                     query(rightChild, mid + 1, rightBound, left, right);
+        }
+    }
+
+    /**
+     * Updates the range [start, end] in the segment tree to be reflect the new value.
+     * Rather than call the {@link #update} function multiple times (with each call incurring a cost of logn time),
+     * this function seeks to propagate all updates in one pass, reducing time complexity from O(klogn) to O(n) for a
+     * range update of size k.
+     * TODO - Add lazy propagation
+     *
+     * @param start The start index of the range to update
+     * @param end   The end index of the range to update
+     * @param val   The value to set to each element in the range
+     */
+    public void updateRange(int start, int end, int val) {
+        updateRange(start, end, val, 0, 0, vals.length - 1);
+        while (start <= end) {
+            vals[start++] = val;
+        }
+    }
+
+    public void updateRange(int start, int end, int val, int currentIndex, int left, int right) {
+        // No overlap in current segment with specified range
+        if (right < start || left > end) {
+            return;
+        } else if (left == right) {
+            // Current node is a leaf node that's within range
+            tree[currentIndex] = val;
+        } else {
+            // Not a leaf node, but current range has some overlap
+            int mid = (left + right) / 2;
+            int leftChild = 2 * currentIndex + 1;
+            int rightChild = 2 * currentIndex + 2;
+            updateRange(start, end, val, leftChild, left, mid);
+            updateRange(start, end, val, rightChild, mid + 1, right);
+            // Update the current node after children updates
+            tree[currentIndex] = tree[leftChild] + tree[rightChild];
         }
     }
 }
